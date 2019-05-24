@@ -26,6 +26,7 @@ class Game {
         Solution search = new Solution();
         CardZone card = new CardZone();
         ArrayList<Integer> tmpList=card.CardRemain();
+        int win=0; int lose=0;
         System.out.println("Welcome to 24Pointer Game");
         System.out.println("Please select the option:");
         while (tmpList.size()>0) {
@@ -47,13 +48,18 @@ class Game {
                 } else if (tmp.contains("" + nums[0]) && tmp.contains("" + nums[1]) && tmp.contains("" + nums[2]) && tmp.contains("" + nums[3]) && solve.FPE(tmp) == 24
                         || (tmp.equals("No") && search.TwentyFourPoints(nums[0], nums[1], nums[2], nums[3]).equals("NotFound"))) {
                     System.out.println("Your Answer is Correct");
-                } else
+                    win++;
+                } else {
                     System.out.println("Your Answer is invalid");
+                    lose++;
+                }
             } else if (tmp.equals("2")) {
                 break;
             }
         }
         System.out.println("Game Over");
+        System.out.println("Correct:"+win+" Incorrect:"+lose);
+        System.out.println("Accuracy: "+(double)win/(double)(win+lose)*100+"%");
     }
 }
 class Solution{
