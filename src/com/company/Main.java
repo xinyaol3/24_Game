@@ -1,8 +1,18 @@
 package com.company;
 import java.util.Scanner;
+import java.util.ArrayList;
 class Game {
-    private static int getRandomCard(int min, int max) {
+    private static int getRandomCard(int min, int max,ArrayList<Integer> card) {
         int x = (int) (Math.random() * ((max - min) + 1)) + min;
+        if(card.contains(x)){
+            card.remove(new Integer(x));
+        }
+        else if(card.size()<=12){
+            getRandomCard(min,max,card);
+        }
+        else{
+            getRandomCard(min,max,card);
+        }
         return x;
     }
 
@@ -11,36 +21,39 @@ class Game {
         String TypeIn = sc.nextLine();
         return TypeIn;
     }
-    public void ModelChoose(){
-        Calculator solve=new Calculator();
-        Solution search=new Solution();
-        int[]nums=new int[4];
+    public void ModelChoose() {
+        Calculator solve = new Calculator();
+        Solution search = new Solution();
+        CardZone card = new CardZone();
+        ArrayList<Integer> tmpList=card.CardRemain();
         System.out.println("Welcome to 24Pointer Game");
         System.out.println("Please select the option:");
-        System.out.println("1)Random Start 2)Quit");
-        String tmp=TypeSolution();
-        if(tmp.equals("1")){
-            System.out.println("Please find a Solution from following Cards ");
-            System.out.println("Type 'SOS' if you want to see a Solution");
-            System.out.println("Type 'No' if there is no Solution");
-            for(int i=0;i<4;i++){
-                nums[i]=getRandomCard(1,13);
-                System.out.println(nums[i]);
+        while (tmpList.size()>0) {
+            System.out.println("1)Random Start 2)Quit");
+            int[] nums = new int[4];
+            String tmp = TypeSolution();
+            if (tmp.equals("1")) {
+                System.out.println("Please find a Solution from following Cards ");
+                System.out.println("Type 'SOS' if you want to see a Solution");
+                System.out.println("Type 'No' if there is no Solution");
+                for (int i = 0; i < 4; i++) {
+                    nums[i] = getRandomCard(1, 13,tmpList);
+                    System.out.println(nums[i]);
+                }
+                System.out.println("Card Remain:"+tmpList.size());
+                tmp = TypeSolution();
+                if (tmp.equals("SOS")) {
+                    System.out.println("The Solution of this case is " + search.TwentyFourPoints(nums[0], nums[1], nums[2], nums[3]));
+                } else if (tmp.contains("" + nums[0]) && tmp.contains("" + nums[1]) && tmp.contains("" + nums[2]) && tmp.contains("" + nums[3]) && solve.FPE(tmp) == 24
+                        || (tmp.equals("No") && search.TwentyFourPoints(nums[0], nums[1], nums[2], nums[3]).equals("NotFound"))) {
+                    System.out.println("Your Answer is Correct");
+                } else
+                    System.out.println("Your Answer is invalid");
+            } else if (tmp.equals("2")) {
+                break;
             }
-            tmp=TypeSolution();
-           if(tmp.equals("SOS")){
-               System.out.println("The Solution of this case is "+search.TwentyFourPoints(nums[0],nums[1],nums[2],nums[3]));
-           }
-            else if(tmp.contains(""+nums[0])&&tmp.contains(""+nums[1])&&tmp.contains(""+nums[2])&&tmp.contains(""+nums[3])&&solve.FPE(tmp)==24
-                    ||(tmp.equals("No")&&search.TwentyFourPoints(nums[0],nums[1],nums[2],nums[3]).equals("NotFound"))){
-                System.out.println("Your Answer is Correct");
-            }
-            else
-                System.out.println("Your Answer is invalid");
         }
-        else if(tmp.equals("2")){
-            System.out.println("Thank you for Playing");
-        }
+        System.out.println("Game Over");
     }
 }
 class Solution{
