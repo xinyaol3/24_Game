@@ -15,7 +15,7 @@ class Calculator {
                     ans = BasicCalculator(s, open, close);
                     String tmp = s.substring(open, close + 1);
                     s = s.replace(tmp, "" + ans);
-                    System.out.println(s);
+                    //System.out.println(s);
                     i=0;
                     FPE(s);
                 }
