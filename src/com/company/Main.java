@@ -31,7 +31,7 @@ class Game {
            if(tmp.equals("SOS")){
                System.out.println("The Solution of this case is "+search.TwentyFourPoints(nums[0],nums[1],nums[2],nums[3]));
            }
-            else if(solve.FPE(tmp)==24||tmp.equals("No")){
+            else if(solve.FPE(tmp)==24||(tmp.equals("No")&&search.TwentyFourPoints(nums[0],nums[1],nums[2],nums[3]).equals("NotFound"))){
                 System.out.println("Your Answer is Correct");
             }
             else
